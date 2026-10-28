@@ -1,0 +1,212 @@
+<html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f6f2">
+  <title>MY2BN Shopper | Products and Cost Calculator</title>
+  <style>
+    :root{--ink:#172b26;--muted:#69756f;--brand:#216b53;--brand-dark:#174e3c;--lime:#d8edb9;--paper:#f7f6f2;--card:#fff;--line:#e6e9e3;--soft:#eef4eb;--warn:#fff4de;--shadow:0 18px 50px rgba(24,51,40,.08)}
+    *{box-sizing:border-box} body{margin:0;background:var(--paper);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.5}
+    button,input{font:inherit} button{cursor:pointer}
+    .wrap{max-width:1050px;margin:0 auto;padding:26px 22px 58px}
+    header{display:flex;align-items:center;justify-content:space-between;margin-bottom:36px}
+    .brand{display:flex;align-items:center;gap:11px}.brand-logo{display:block;width:110px;height:90px;object-fit:contain}
+    .tag{font-size:12px;color:var(--brand-dark);background:var(--lime);padding:7px 12px;border-radius:99px;font-weight:700}
+    .hero{display:grid;grid-template-columns:1.15fr .85fr;gap:32px;align-items:end;margin-bottom:25px}
+    .eyebrow{color:var(--brand);font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;margin:0 0 10px}
+    h1{font-size:clamp(34px,5vw,54px);line-height:1.02;letter-spacing:-.055em;margin:0 0 14px;max-width:620px}
+    .intro{color:var(--muted);margin:0;max-width:560px;font-size:16px}
+    .rate-card{background:#e8f0e5;border-radius:20px;padding:20px 22px}.rate-card strong{display:block;font-size:22px;letter-spacing:-.03em}.rate-card span{font-size:13px;color:var(--muted)}
+    .layout{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(280px,.75fr);gap:20px;align-items:start}
+    .panel{background:var(--card);border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow)}
+    .items-panel{padding:24px}.panel-head{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:18px}.panel h2{font-size:18px;letter-spacing:-.03em;margin:0}.subtle{color:var(--muted);font-size:13px;margin:4px 0 0}
+    .item{border:1px solid var(--line);border-radius:16px;padding:16px;margin:12px 0;background:#fff}.item-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}.item-title{font-weight:750;font-size:14px}.remove{border:0;background:transparent;color:#8a938e;font-size:13px;padding:5px 7px}.remove:hover{color:#b53b32}
+    .fields{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:11px}.field label{display:flex;align-items:flex-end;min-height:34px;color:var(--muted);font-size:11px;font-weight:750;margin:0 0 6px}.input-wrap{display:flex;align-items:center;border:1px solid #dfe5dd;border-radius:11px;background:#fff;min-width:0}.input-wrap:focus-within{outline:3px solid rgba(33,107,83,.13);border-color:var(--brand)}.prefix{color:#7d8982;font-size:13px;padding-left:11px}.input-wrap input{border:0;outline:0;background:transparent;width:100%;min-width:0;padding:10px 10px;color:var(--ink);font-size:14px}.input-wrap .plain{padding-left:11px}
+    .add{margin-top:4px;background:var(--soft);border:1px solid #dce8d8;color:var(--brand-dark);font-weight:750;padding:11px 15px;border-radius:12px}.add:hover{background:#e2eddf}
+    .summary{padding:24px;position:sticky;top:18px;background:var(--brand);color:#fff;border:0}.summary .eyebrow{color:var(--lime)}.summary h2{font-size:18px;margin:0}.total-label{color:#dce9e2;font-size:13px;margin:25px 0 2px}.total{font-size:clamp(38px,5vw,48px);font-weight:850;letter-spacing:-.055em;line-height:1.1}.total small{font-size:19px;letter-spacing:0;margin-right:5px}.summary-note{font-size:12px;color:#dce9e2;margin:9px 0 22px}
+    .breakdown{border-top:1px solid rgba(255,255,255,.2);padding-top:14px}.line{display:flex;justify-content:space-between;gap:12px;font-size:13px;padding:6px 0;color:#eaf1ed}.line strong{color:white;font-weight:700}.line.final{font-size:15px;border-top:1px solid rgba(255,255,255,.2);margin-top:7px;padding-top:13px;font-weight:800;color:white}
+    .copy{width:100%;border:0;border-radius:12px;background:var(--lime);color:var(--brand-dark);padding:12px 14px;font-weight:800;margin-top:20px}.copy:hover{background:#e6f5cd}.copy:focus-visible,.add:focus-visible,.remove:focus-visible{outline:3px solid #9bc786;outline-offset:2px}
+    .notice{margin-top:18px;background:var(--warn);border-radius:14px;padding:13px 15px;color:#65532f;font-size:12px}.notice strong{display:block;margin-bottom:3px;color:#4e411f}
+    .contact{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:16px;padding:18px 20px;border:1px solid var(--line);border-radius:18px;background:#fff}.contact-copy strong{display:block;font-size:15px}.contact-copy span{font-size:12px;color:var(--muted)}.contact-links{display:flex;gap:9px;flex-wrap:wrap}.contact-link{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;border-radius:11px;padding:10px 14px;font-size:13px;font-weight:800}.contact-link.whatsapp{background:var(--brand);color:white}.contact-link.instagram{background:#f3edf4;color:#713c69}.contact-link:hover{filter:brightness(.96)}
+    .main-nav{position:sticky;top:0;z-index:10;display:flex;justify-content:center;gap:8px;margin:-14px 0 24px;padding:10px;background:rgba(247,246,242,.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}.main-nav a{color:var(--brand-dark);text-decoration:none;font-weight:750;font-size:13px;padding:9px 14px;border-radius:99px}.main-nav a:hover{background:var(--lime)}.shop-section,.cart-section{scroll-margin-top:76px;margin:0 0 22px}.shop-heading{display:flex;align-items:end;justify-content:space-between;gap:16px;margin-bottom:14px}.shop-heading h2,.cart-section h2{font-size:24px;letter-spacing:-.04em;margin:0}.shop-heading p,.cart-note{font-size:13px;color:var(--muted);margin:4px 0 0}.product-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.product-card{overflow:hidden;border:1px solid var(--line);border-radius:18px;background:#fff;box-shadow:var(--shadow)}.product-photo{display:block;width:100%;aspect-ratio:4/3;object-fit:cover;background:#edf1eb}.product-info{padding:15px}.product-info h3{font-size:15px;margin:0 0 5px}.product-description{min-height:1.5em;color:var(--muted);font-size:12px;margin:0 0 10px}.product-price{font-size:12px;font-weight:600;color:var(--muted);margin:0 0 12px}.product-price-bnd{font-size:20px;line-height:1.2;font-weight:850;color:var(--brand-dark);margin:0 0 3px}.product-price-bnd .fee-note{display:block;font-size:10px;line-height:1.3;font-weight:500;color:var(--muted);margin-top:2px}.product-add{width:100%;border:0;border-radius:11px;background:var(--brand);color:#fff;padding:10px;font-weight:800}.product-add:hover{background:var(--brand-dark)}.empty-catalog{grid-column:1/-1;text-align:center;border:1px dashed #cbd6ca;border-radius:18px;padding:28px;background:#fff}.empty-catalog strong{font-size:16px}.empty-catalog p{margin:5px 0;color:var(--muted);font-size:13px}.cart-section{padding:22px;background:#fff;border:1px solid var(--line);border-radius:18px}.cart-list{display:grid;gap:8px;margin-top:13px}.cart-row{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--line);font-size:13px}.cart-row button{border:0;background:transparent;color:#9a443d;font-size:12px}.cart-total{display:flex;justify-content:space-between;margin-top:12px;font-size:15px;font-weight:850}.cart-total.bnd-main{font-size:19px;color:var(--brand-dark)}.cart-total.rm-sub{font-size:13px;color:var(--muted);font-weight:650}.cart-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}.cart-actions button,.cart-actions a{border:0;border-radius:11px;padding:10px 14px;font-weight:800;text-decoration:none;font-size:13px}.cart-copy{background:var(--soft);color:var(--brand-dark)}.cart-whatsapp{background:var(--brand);color:#fff}.cart-status{font-size:12px;color:var(--muted);align-self:center}
+    details{margin-top:20px;border-top:1px solid var(--line);padding-top:15px}summary{font-size:13px;font-weight:750;cursor:pointer;color:var(--brand-dark)}.settings{display:grid;grid-template-columns:minmax(0,1fr);gap:12px;margin-top:14px}.settings .input-wrap{background:#fbfcfa}.settings-help{font-size:11px;color:var(--muted);margin:9px 0 0}.tier-list{display:grid;grid-template-columns:1fr 1fr;gap:7px 16px;margin-top:10px;font-size:12px;color:var(--muted)}.tier-list strong{color:var(--brand-dark);margin-left:5px}
+    footer{display:flex;justify-content:space-between;gap:16px;margin-top:22px;color:var(--muted);font-size:12px}.empty{font-size:13px;color:var(--muted);padding:12px 0}
+    .catalog-filters{display:grid;gap:10px;margin:18px 0 16px;padding:14px;border:1px solid var(--line);border-radius:16px;background:#fff}.filter-row{display:flex;align-items:flex-start;gap:12px}.filter-row>strong{flex:0 0 118px;padding-top:7px;font-size:12px;color:var(--muted)}.filter-buttons{display:flex;gap:7px;flex-wrap:wrap}.filter-chip{border:1px solid var(--line);border-radius:999px;background:#fff;color:var(--brand-dark);padding:7px 12px;font:inherit;font-weight:700;font-size:12px;cursor:pointer}.filter-chip:hover{border-color:var(--brand)}.filter-chip[aria-pressed="true"]{background:var(--brand);border-color:var(--brand);color:#fff}.catalog-count{margin:0 0 0 130px;font-size:11px;color:var(--muted)}.shopee-note{margin:0 0 0 130px;padding:10px 12px;border-radius:10px;background:#fff4de;color:#604913;font-size:12px;font-weight:650}
+    @media(max-width:760px){.wrap{padding:18px 15px 38px}header{margin-bottom:18px}.main-nav{justify-content:flex-start;overflow-x:auto;margin:0 -15px 20px;padding:9px 15px}.main-nav a{white-space:nowrap}.hero{grid-template-columns:1fr;gap:18px;margin-bottom:18px}.rate-card{padding:16px 18px}.layout{grid-template-columns:1fr}.summary{position:static;order:-1}.items-panel,.summary{padding:20px}.fields{grid-template-columns:1fr 1fr}.field:first-child{grid-column:1/-1}.tag{font-size:11px;padding:6px 9px}.product-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.filter-row{display:block}.filter-row>strong{display:block;padding:0 0 6px}.catalog-count{margin-left:0}}
+    @media(max-width:560px){.contact{align-items:flex-start;flex-direction:column}.contact-links{width:100%}.contact-link{flex:1}}
+  @media(max-width:430px){
+    .product-grid{
+        grid-template-columns:repeat(2,1fr);
+        gap:10px;
+    }.product-card{
+    display:block;
+}
+
+.product-photo{
+    width:100%;
+    aspect-ratio:4/3;
+    min-height:auto;
+}.shop-heading{align-items:flex-start;flex-direction:column}.cart-section{padding:17px}}
+    @media(max-width:390px){.fields{gap:8px}.item{padding:12px}.brand-logo{width:96px;height:78px}.settings{grid-template-columns:1fr}}
+    .official-source{display:block;width:max-content;max-width:100%;margin:0 0 10px;color:var(--brand-dark);font-size:12px;font-weight:750;text-decoration:underline;text-underline-offset:2px}
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <header>
+      <div class="brand"><img class="brand-logo" src="my2bnshopper-logo.png" alt="MY2BN Shopper"></div>
+      <span class="tag">Malaysia → Brunei</span>
+    </header>
+    <nav class="main-nav" aria-label="Main navigation"><a href="#home">Home</a><a href="#calculator">Cost calculator</a><a href="#shop">Shop products</a><a href="#cart">Cart <span id="cartCount">(0)</span></a></nav>
+    <section class="hero" id="home" aria-labelledby="title">
+      <div><p class="eyebrow">Quick cost estimate</p><h1 id="title">Plan your shopping total.</h1><p class="intro">Add the product price in Malaysian ringgit to estimate the product price and shopping service fee in Brunei dollars. Add a delivery fee if you know it.</p></div>
+      <div class="rate-card"><strong>BND 1 = MYR 3.10</strong><span>Fixed exchange rate</span></div>
+    </section>
+    <section class="layout" id="calculator">
+      <div class="panel items-panel">
+        <div class="panel-head"><div><h2>Your products</h2><p class="subtle">Enter the listed product price in MYR.</p></div></div>
+        <div id="items"></div>
+        <button class="add" id="addItem" type="button">＋ Add another product</button>
+        <details open>
+          <summary>Pricing guide</summary>
+          <p class="settings-help">The exchange rate is fixed at BND 1 = MYR 3.10. Delivery is optional; enter it in MYR and it will be converted using the fixed exchange rate. The approximate shopping service fee is calculated from product value in BND:</p>
+          <div class="tier-list"><span>Below BND 50 <strong>~15%</strong></span><span>BND 50–100 <strong>~12%</strong></span><span>BND 100–200 <strong>~10%</strong></span><span>BND 200–400 <strong>~7%</strong></span><span>Above BND 400 <strong>~5%</strong></span></div>
+        </details>
+      </div>
+      <aside class="panel summary" aria-live="polite">
+        <p class="eyebrow">Your estimate</p><h2>Estimated total</h2>
+        <p class="total-label">Payable in Brunei dollars</p><div class="total"><small>BND</small><span id="grandTotal">0.00</span></div>
+        <p class="summary-note">Based on the prices and fees entered below.</p>
+        <div class="breakdown">
+          <div class="line"><span>Products before service fee</span><strong id="productSubtotal">BND 0.00</strong></div>
+          <div class="line"><span>Shopping service fee</span><strong id="serviceFee">BND 0.00</strong></div>
+          <div class="line"><span>Delivery fee</span><strong id="deliveryTotal">BND 0.00</strong></div>
+          <div class="line"><span>Products + delivery (MYR)</span><strong id="productsDeliveryMYR">RM 0.00</strong></div>
+          <div class="line final"><span>Estimated total</span><strong id="summaryTotal">BND 0.00</strong></div>
+        </div>
+        <button class="copy" id="copyQuote" type="button">Copy estimate</button>
+      </aside>
+    </section>
+    <div class="notice"><strong>Estimate only</strong>Delivery is included only when you enter a fee. Final price may change with product availability, actual shipping, or other applicable fees. Send MY2BN Shopper a product photo for an exact quote.</div>
+    <section class="shop-section" id="shop" aria-labelledby="shopTitle">
+      <div class="shop-heading"><div><p class="eyebrow">Shop MY2BN Shopper</p><h2 id="shopTitle">Browse products</h2><p>Choose a brand, then narrow the list by product category. The BND estimate includes the service fee.</p></div></div>
+      <div class="catalog-filters" aria-label="Filter products">
+        <div class="filter-row"><strong>Brand</strong><div class="filter-buttons" id="brandFilters" role="group" aria-label="Filter by brand"></div></div>
+        <div class="filter-row" id="marketplaceRow"><strong>Marketplace</strong><div class="filter-buttons" id="marketplaceFilters" role="group" aria-label="Filter by marketplace"></div></div>
+        <div class="filter-row"><strong>Product category</strong><div class="filter-buttons" id="categoryFilters" role="group" aria-label="Filter by product category"></div></div>
+        <p class="shopee-note" id="shopeeNote" hidden>Keep Shopee orders above BND 15 to avoid shipping charges; orders of BND 15 or less may incur a shipping fee. Please confirm shipping at checkout.</p>
+        <p class="catalog-count" id="catalogCount" aria-live="polite"></p>
+      </div>
+      <div class="product-grid" id="productGrid" aria-live="polite"></div>
+    </section>
+    <section class="cart-section" id="cart" aria-labelledby="cartTitle">
+      <h2 id="cartTitle">Your cart</h2><p class="cart-note">Your cart is saved only in this browser. To place an order, copy it and message MY2BN Shopper on WhatsApp.</p>
+      <div class="cart-list" id="cartList"></div><div class="cart-total bnd-main"><span>BND estimate</span><span id="cartTotalBND">BND 0.00</span></div>
+      <div class="cart-actions"><button class="cart-copy" id="copyCart" type="button">Copy cart details</button><a class="cart-whatsapp" href="https://wa.me/message/3BMD3OJ6SQFNN1" target="_blank" rel="noopener noreferrer">Message us on WhatsApp ↗</a><span class="cart-status" id="cartStatus" aria-live="polite"></span></div>
+    </section>
+    <section class="contact" aria-label="Contact MY2BN Shopper">
+      <div class="contact-copy"><strong>Need an exact quote?</strong><span>Send us a product photo on WhatsApp or follow us for updates.</span></div>
+      <div class="contact-links">
+        <a class="contact-link whatsapp" href="https://wa.me/message/3BMD3OJ6SQFNN1" target="_blank" rel="noopener noreferrer">Message us on WhatsApp ↗</a>
+        <a class="contact-link instagram" href="https://www.instagram.com/my2bnshopper?stkn=MXJ6N2s4d3B4bjlsOQ==" target="_blank" rel="noopener noreferrer">Follow on Instagram ↗</a>
+      </div>
+    </section>
+    <footer><span>Product cart stays in this browser. Orders are placed through WhatsApp.</span><span>MY2BN Shopper · Product shop and cost calculator</span></footer>
+  </main>
+  <template id="itemTemplate">
+    <div class="item">
+      <div class="item-top"><span class="item-title">Product</span><button class="remove" type="button" aria-label="Remove product">Remove</button></div>
+      <div class="fields">
+        <div class="field"><label>Product name (optional)</label><div class="input-wrap"><input class="name plain" type="text" placeholder="e.g. shoes"></div></div>
+        <div class="field"><label>Price per item (MYR)</label><div class="input-wrap"><span class="prefix">RM</span><input class="price" type="number" min="0" step="0.01" placeholder="0.00" inputmode="decimal"></div></div>
+        <div class="field"><label>Quantity</label><div class="input-wrap"><input class="qty plain" type="number" min="1" step="1" value="1" inputmode="numeric"></div></div>
+        <div class="field"><label>Delivery fee (optional, MYR)</label><div class="input-wrap"><span class="prefix">RM</span><input class="delivery" type="number" min="0" step="0.1" placeholder="0.00" inputmode="decimal"></div></div>
+      </div>
+    </div>
+  </template>
+  <script src="products.js"></script>
+  <script>
+    const itemsEl=document.getElementById('items'), template=document.getElementById('itemTemplate');
+    const money=n=>new Intl.NumberFormat('en-BN',{minimumFractionDigits:2,maximumFractionDigits:2}).format(Number.isFinite(n)?n:0);
+    const num=(el,fallback=0)=>{const v=parseFloat(el.value);return Number.isFinite(v)?v:fallback};
+    function serviceRate(converted){if(converted<50)return .15;if(converted<100)return .12;if(converted<=200)return .10;if(converted<=400)return .07;return .05}
+    function addItem(){const node=template.content.firstElementChild.cloneNode(true);node.querySelector('.remove').addEventListener('click',()=>{node.remove();renumber();calculate()});node.querySelectorAll('input').forEach(i=>i.addEventListener('input',calculate));itemsEl.appendChild(node);renumber();calculate();node.querySelector('.name').focus()}
+    function renumber(){[...itemsEl.querySelectorAll('.item')].forEach((n,i)=>n.querySelector('.item-title').textContent=`Product ${i+1}`)}
+    function calculate(){const rate=3.10;let subtotal=0,service=0,deliveryMYR=0,productsMYR=0;
+      itemsEl.querySelectorAll('.item').forEach(node=>{const rm=num(node.querySelector('.price'));const qty=Math.max(1,Math.floor(num(node.querySelector('.qty'),1)));const converted=Math.ceil(rm/rate);const base=converted*qty;const fee=(Math.ceil(converted*(1+serviceRate(converted)))-converted)*qty;const ship=num(node.querySelector('.delivery'));subtotal+=base;service+=fee;deliveryMYR+=ship;productsMYR+=rm*qty;});
+      const delivery=deliveryMYR/rate;const total=subtotal+service+delivery;document.getElementById('productSubtotal').textContent=`BND ${money(subtotal)}`;document.getElementById('serviceFee').textContent=`BND ${money(service)}`;document.getElementById('deliveryTotal').textContent=`BND ${money(delivery)}`;document.getElementById('productsDeliveryMYR').textContent=`RM ${money(productsMYR+deliveryMYR)}`;document.getElementById('grandTotal').textContent=money(total);document.getElementById('summaryTotal').textContent=`BND ${money(total)}`;
+    }    document.getElementById('addItem').addEventListener('click',addItem);
+    document.getElementById('copyQuote').addEventListener('click', async () => {
+
+    const lines = [...itemsEl.querySelectorAll('.item')]
+        .map(node => {
+
+            const name = node.querySelector('.name').value.trim() || 'Product';
+
+            const rm = num(node.querySelector('.price'));
+            const qty = Math.max(1, Math.floor(num(node.querySelector('.qty'), 1)));
+
+            const converted = Math.ceil(rm / 3.10);
+            const feeRate = serviceRate(converted);
+
+            const itemTotal = Math.ceil(converted * (1 + feeRate)) * qty;
+
+            return `- $${itemTotal} - ${name}`;
+        });
+
+    const total = Math.ceil(
+        parseFloat(document.getElementById('grandTotal').textContent) || 0
+    );
+
+    const deposit = Math.ceil(total / 2);
+    const remaining = total - deposit;
+
+    const text =
+`🛍️ ORDER SUMMARY
+${lines.join('\n')}
+
+TOTAL: $${total}
+Deposit: $${deposit}
+Remaining: $${remaining}
+
+📍 Collection Point: Jerudong`;
+
+    const b = document.getElementById('copyQuote');
+
+    try {
+        await navigator.clipboard.writeText(text);
+        b.textContent = 'Copied';
+        setTimeout(() => b.textContent = 'Copy estimate', 1800);
+    } catch {
+        b.textContent = 'Copy unavailable';
+        setTimeout(() => b.textContent = 'Copy estimate', 1800);
+    }
+});
+    const baseCatalog=Array.isArray(window.MY2BN_PRODUCTS)?window.MY2BN_PRODUCTS:[], productGrid=document.getElementById('productGrid'), managerKey='my2bn-shopper-manager-v3';
+    const isPinduoduoProductUrl=value=>{try{const url=new URL(value);return url.protocol==='https:'&&/(^|\.)yangkeduo\.com$/i.test(url.hostname)&&((['/goods.html','/poros/h5'].includes(url.pathname)&&url.searchParams.has('goods_id'))||(url.pathname==='/mall_page.html'&&(url.searchParams.has('ps')||url.searchParams.has('mall_sn'))))}catch{return false}};
+const hasProductLink=p=>/^https:\/\/(?:www\.)?yslbeauty\.com\.my\/en_MY\/.+\.html(?:[?#].*)?$/i.test(String(p?.sourceUrl||''))||/^https:\/\/shopee\.com\.my\/.+-i\.\d+\.\d+(?:[?#].*)?$/i.test(String(p?.sourceUrl||''))||isPinduoduoProductUrl(String(p?.sourceUrl||''))||/^https:\/\/(?:www\.)?taobao\.com\/.+/i.test(String(p?.sourceUrl||''));
+    function loadCatalog(){try{const saved=JSON.parse(localStorage.getItem(managerKey)||'null');if(!Array.isArray(saved))return baseCatalog.filter(hasProductLink);const baseById=new Map(baseCatalog.map(p=>[String(p.id),p]));const merged=saved.map(p=>{const base=baseById.get(String(p.id))||{},updatedBlush=p.id==='flower-knows-sweetie-bear-satin-blush';return {...base,...p,image:p.image&&p.image!=='product-images/photo-coming-soon.svg'?p.image:(base.image||p.image),name:updatedBlush&&p.name==='Flower Knows Sweetie Bear Satin Blush'?base.name:p.name,description:updatedBlush&&String(p.description||'').startsWith('Pinduoduo shop listing ¥79')?base.description:p.description,priceMYR:updatedBlush&&Number(p.priceMYR)===53.5?base.priceMYR:p.priceMYR,sourceUrl:(p.id==='flower-knows-shell-pearl-embossed-satin-blush-pdd-744930384519'||updatedBlush)?(base.sourceUrl||p.sourceUrl):(p.sourceUrl||base.sourceUrl)}});const mergedWithBase=merged.map(p=>{const base=baseById.get(String(p.id))||{};return {...p,brand:p.brand||base.brand,marketplace:p.marketplace||base.marketplace||((base.subbrand==='MUJI')?'Shopee':''),category:p.category||base.category}});const savedIds=new Set(mergedWithBase.map(p=>String(p.id)));return [...mergedWithBase,...baseCatalog.filter(p=>!savedIds.has(String(p.id)))].filter(hasProductLink)}catch{return baseCatalog.filter(hasProductLink)}}
+    let brandFilter='all',marketplaceFilter='all',categoryFilter='all';
+    const categoryNames={lips:'Lipstick & lip products',eyes:'Eye makeup',face:'Face makeup',skincare:'Skincare',fragrance:'Fragrance',stationery:'Stationery',food:'Food & drink',home:'Home & living',other:'Other products'};
+    function productBrand(p){return p.brand||(/yslbeauty\.com\.my|\bYSL\b/i.test(`${p.name||''} ${p.sourceUrl||''}`)?'YSL':'Other brands')}
+    function productMarketplace(p){return p.marketplace||(String(p.sourceUrl||'').includes('shopee.com.my')?'Shopee':String(p.sourceUrl||'').includes('yangkeduo.com')?'Pinduoduo':String(p.sourceUrl||'').includes('taobao.com')?'Taobao':String(p.sourceUrl||'').includes('yslbeauty.com.my')?'YSL Malaysia':'Other')}
+    function productCategory(p){if(p.category&&categoryNames[p.category])return p.category;const text=`${p.name||''} ${p.description||''} ${p.sourceUrl||''}`;if(/\b(lip|lipstick|gloss|candy glaze|the inks)\b/i.test(text))return'lips';if(/\/fragrance\/|\b(parfum|eau de parfum|fragrance)\b/i.test(text))return'fragrance';if(/\/skincare\/|pure shots|top secrets|care crush|eye reboot|or rouge/i.test(text))return'skincare';if(/mascara|eyeliner|eye pencil|eyeshadow|mini clutch|lash clash|lash latex/i.test(text))return'eyes';if(/foundation|cushion|blush|powder|bronze|highlight|face brush/i.test(text))return'face';return'other'}
+    function makeFilterButton(label,value,current,onSelect){const button=document.createElement('button');button.type='button';button.className='filter-chip';button.textContent=label;button.setAttribute('aria-pressed',String(value===current));button.addEventListener('click',onSelect);return button}
+    function renderFilters(){const brands=[...new Set(catalog.map(productBrand))].sort((a,b)=>a==='YSL'?-1:b==='YSL'?1:a.localeCompare(b));const brandBox=document.getElementById('brandFilters');brandBox.replaceChildren();brandBox.appendChild(makeFilterButton('All brands','all',brandFilter,()=>{brandFilter='all';marketplaceFilter='all';categoryFilter='all';renderFilters();renderCatalog()}));brands.forEach(brand=>brandBox.appendChild(makeFilterButton(brand,brand,brandFilter,()=>{brandFilter=brand;marketplaceFilter='all';categoryFilter='all';renderFilters();renderCatalog()})));const brandScoped=brandFilter==='all'?catalog:catalog.filter(p=>productBrand(p)===brandFilter);const marketplaces=[...new Set(brandScoped.map(productMarketplace))].sort((a,b)=>a==='Shopee'?-1:b==='Shopee'?1:a.localeCompare(b));const marketplaceBox=document.getElementById('marketplaceFilters');marketplaceBox.replaceChildren();marketplaceBox.appendChild(makeFilterButton('All marketplaces','all',marketplaceFilter,()=>{marketplaceFilter='all';categoryFilter='all';renderFilters();renderCatalog()}));marketplaces.forEach(name=>marketplaceBox.appendChild(makeFilterButton(name,name,marketplaceFilter,()=>{marketplaceFilter=name;categoryFilter='all';renderFilters();renderCatalog()})));document.getElementById('shopeeNote').hidden=marketplaceFilter!=='Shopee';const scoped=brandScoped.filter(p=>marketplaceFilter==='all'||productMarketplace(p)===marketplaceFilter);const categories=[...new Set(scoped.map(productCategory))].sort((a,b)=>['lips','eyes','face','skincare','fragrance','stationery','food','home','other'].indexOf(a)-['lips','eyes','face','skincare','fragrance','stationery','food','home','other'].indexOf(b));const categoryBox=document.getElementById('categoryFilters');categoryBox.replaceChildren();categoryBox.appendChild(makeFilterButton('All categories','all',categoryFilter,()=>{categoryFilter='all';renderFilters();renderCatalog()}));categories.forEach(key=>categoryBox.appendChild(makeFilterButton(categoryNames[key],key,categoryFilter,()=>{categoryFilter=key;renderFilters();renderCatalog()})))}
+
+    let catalog=loadCatalog();
+    let cart={};try{cart=JSON.parse(localStorage.getItem('my2bn-shop-cart')||'{}')||{}}catch{cart={}}
+    const saveCart=()=>{try{localStorage.setItem('my2bn-shop-cart',JSON.stringify(cart))}catch{}};
+    function catalogPriceBND(priceMYR){const converted=Math.ceil((Number(priceMYR)||0)/3.10);return Math.ceil(converted*(1+serviceRate(converted)))}
+    function renderCatalog(){productGrid.replaceChildren();const visible=catalog.filter(p=>(brandFilter==='all'||productBrand(p)===brandFilter)&&(marketplaceFilter==='all'||productMarketplace(p)===marketplaceFilter)&&(categoryFilter==='all'||productCategory(p)===categoryFilter));document.getElementById('catalogCount').textContent=`Showing ${visible.length} of ${catalog.length} products`;if(!visible.length){const empty=document.createElement('div');empty.className='empty-catalog';empty.innerHTML='<strong>No products in this category yet</strong><p>Choose another brand or category to browse available items.</p>';productGrid.appendChild(empty);return}visible.forEach(product=>{const card=document.createElement('article');card.className='product-card';const image=document.createElement('img');image.className='product-photo';image.src=product.image||'product-images/photo-coming-soon.svg';image.alt=product.name;image.loading='lazy';image.onerror=()=>{image.onerror=null;image.src='product-images/photo-coming-soon.svg'};const info=document.createElement('div');info.className='product-info';const name=document.createElement('h3');name.textContent=product.name;const description=document.createElement('p');description.className='product-description';description.textContent=product.description||'';const priceBND=document.createElement('p');priceBND.className='product-price-bnd';priceBND.append(document.createTextNode(`BND ${money(catalogPriceBND(product.priceMYR))}`));const feeNote=document.createElement('span');feeNote.className='fee-note';feeNote.textContent='Service fee added';priceBND.append(feeNote);const button=document.createElement('button');button.className='product-add';button.type='button';button.textContent='Add to cart';button.addEventListener('click',()=>{cart[product.id]=(Number(cart[product.id])||0)+1;saveCart();renderCart()});info.append(name,priceBND);if(product.sourceUrl){const source=document.createElement('a');source.className='official-source';source.href=product.sourceUrl;source.target='_blank';source.rel='noopener noreferrer';source.textContent=product.sourceUrl.includes('shopee.com.my')?'View on Shopee Malaysia ↗':product.sourceUrl.includes('yangkeduo.com')?'View on Pinduoduo ↗':product.sourceUrl.includes('taobao.com')?'View on Taobao ↗':'View on YSL Malaysia ↗';info.append(source)}info.append(button);card.append(image,info);productGrid.appendChild(card)})}
+    function renderCart(){const list=document.getElementById('cartList');list.replaceChildren();let count=0,totalBND=0;const active=catalog.filter(p=>(Number(cart[p.id])||0)>0);active.forEach(product=>{const qty=Number(cart[product.id])||0;count+=qty;const bnd=catalogPriceBND(product.priceMYR)*qty;totalBND+=bnd;const row=document.createElement('div');row.className='cart-row';const label=document.createElement('span');label.textContent=`${product.name} × ${qty} · BND ${money(bnd)}`;const remove=document.createElement('button');remove.type='button';remove.textContent='Remove';remove.setAttribute('aria-label',`Remove ${product.name} from cart`);remove.addEventListener('click',()=>{delete cart[product.id];saveCart();renderCart()});row.append(label,remove);list.appendChild(row)});if(!active.length){const empty=document.createElement('p');empty.className='empty';empty.textContent='Your cart is empty. Browse products above to get started.';list.appendChild(empty)}document.getElementById('cartCount').textContent=`(${count})`;document.getElementById('cartTotalBND').textContent=`BND ${money(totalBND)}`}
+    document.getElementById('copyCart').addEventListener('click',async()=>{const active=catalog.filter(p=>(Number(cart[p.id])||0)>0);const status=document.getElementById('cartStatus');if(!active.length){status.textContent='Your cart is empty.';return}const lines=active.map(p=>`${p.name} × ${cart[p.id]} — BND ${money(catalogPriceBND(p.priceMYR)*cart[p.id])}`);const order=`MY2BN Shopper cart\n${lines.join('\n')}\nProducts and service fee total: BND ${document.getElementById('cartTotalBND').textContent.replace('BND ','')}\nPlease confirm availability, delivery, and final price.`;try{await navigator.clipboard.writeText(order);status.textContent='Cart copied. Paste it into WhatsApp to order.'}catch{status.textContent='Could not copy. Please message us on WhatsApp.'}});
+    renderFilters();renderCatalog();renderCart();
+    window.addEventListener('storage',event=>{if(event.key===managerKey){catalog=loadCatalog();renderFilters();renderCatalog();renderCart()}});
+    window.addEventListener('message',event=>{if(event.source!==window.opener||event.data?.type!=='MY2BN_CATALOG_UPDATE'||!Array.isArray(event.data.products))return;catalog=event.data.products.filter(hasProductLink);renderFilters();renderCatalog();renderCart()});
+    if(window.opener)window.opener.postMessage({type:'MY2BN_PREVIEW_READY'},'*');
+    addItem();
+  </script>
+</body>
+</html>
