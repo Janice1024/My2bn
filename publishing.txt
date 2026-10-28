@@ -1,0 +1,10 @@
+MY2BN SHOPPER WEBSITE PACKAGE
+
+This package contains 55 YSL Malaysia products with direct product links and listed retail prices in MYR, along with the customer calculator, BND estimate, cart, and contact links. Every listed product has a direct YSL Malaysia product page link. Product prices and availability may change. This is an expanded starter catalog, not every shade, size, limited edition, or product in YSL Malaysia’s full range.
+
+To update products later, open outputs/my2bn-shopper-admin.html. Edit items, upload photos, or import a workbook. For a YSL photo, open the matching YSL product page, right-click the actual photo, choose Copy image link, and paste that direct image address into the manager. The page URL itself is not an image URL. Click Open synced customer preview to see the current manager products and watch edits update live. The manager saves edits in that browser only; it cannot directly change the files already deployed to Netlify.
+
+To publish manager changes: click Download website product list, replace products.js in this website folder with the downloaded file, then upload the updated my2bn-shopper-site folder to Netlify. Customers will see the changes after that upload.
+
+The private product manager is not included in the public-site package. Keep it separate from the public website unless secure sign-in is added.
+The previous catalog was backed up separately as my2bn-shopper-catalog-before-clear-backup.zip.
